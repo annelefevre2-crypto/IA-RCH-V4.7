@@ -35,16 +35,39 @@
   const hideError = () => hideEl(cameraError);
   const showSuccess = (t) => { if(!successMsg) return; if(t) successMsg.textContent=t; showEl(successMsg); setTimeout(()=>hideEl(successMsg),1500); };
 
+ // ---------- QrScanner instance ----------
   async function startScanner(backId) {
     const QrScanner = window.__QrScanner;
-    if (!QrScanner) { showError("QrScanner non chargé."); return; }
-    if (window.__scanner) { await window.__scanner.stop(); window.__scanner.destroy(); window.__scanner=null; }
-    const scanner = new QrScanner(videoEl,(result)=>{
-      const data = result?.data || result; if(!data) return;
-      hideScanUI(); stopCamera().finally(()=>{ handleQRContent(data); showSuccess("✅ QR Code détecté avec succès"); });
-    },{highlightScanRegion:true,highlightCodeOutline:true});
-    if (backId) await scanner.start(backId); else await scanner.start();
+    if (!QrScanner) {
+      showError("QrScanner non chargé (vérifie le bloc <script type='module'> dans index.html).");
+      return;
+    }
+
+    if (window.__scanner) {
+      await window.__scanner.stop();
+      window.__scanner.destroy();
+      window.__scanner = null;
+    }
+
+    const scanner = new QrScanner(
+      videoEl,
+      (result) => {
+        const data = result?.data || result;
+        if (!data) return;
+        hideScanUI();
+        stopCamera().finally(() => {
+          handleQRContent(data);
+          showSuccess("✅ QR Code détecté avec succès");
+        });
+      },
+      { highlightScanRegion: true, highlightCodeOutline: true }
+    );
+
+    if (backId) await scanner.start(backId);
+    else await scanner.start();
+
     window.__scanner = scanner;
+    console.log("📷 QrScanner démarré");
   }
 
   function startCamera(){
