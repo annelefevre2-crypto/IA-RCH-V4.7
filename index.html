@@ -4,21 +4,33 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Mémento opérationnel IA – RCH</title>
+
+  <!-- Style principal -->
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css?v=4.7.0" />
   <script type="module">
+    
+ <!-- Librairie de scan QR -->
+    
     import QrScanner from "https://unpkg.com/qr-scanner@1.4.2/qr-scanner.min.js";
     QrScanner.WORKER_PATH = "https://unpkg.com/qr-scanner@1.4.2/qr-scanner-worker.min.js";
     window.__QrScanner = QrScanner;
   </script>
 </head>
 <body>
+  
+<!-- HEADER -->
+  
   <header>
     <img src="assets/logo-ensosp.png" alt="ENSOSP" />
     <h1>Mémento opérationnel IA – RCH</h1>
   </header>
+  
+<!-- MAIN -->
+  
   <main>
     <section class="card">
       <p id="scanHint" class="hidden">Cadrez le QR code dans la zone puis cliquez sur « Scanner QR Code ».</p>
@@ -48,6 +60,9 @@
       <div id="formFields" class="form-fields"></div>
     </section>
   </main>
+
+  <!-- FOOTER -->
+
   <footer>
     © ENSOSP — Cne Eddy Fischer – Cdt Anne Tirelle
     <span id="appVersion"></span>
