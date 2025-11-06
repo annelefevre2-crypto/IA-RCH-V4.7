@@ -1,0 +1,45 @@
+/* v4.7.0 styles */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:"Inter","Segoe UI",Roboto,sans-serif;background:#f7f9fc;color:#111}
+.hidden{display:none!important}
+header{display:flex;align-items:center;gap:1rem;background:#1b2ba0;color:#fff;padding:.7rem 1rem}
+header img{height:56px}
+header h1{font:800 1.25rem "Montserrat",sans-serif}
+#langSelect{margin-left:auto;background:#fff;color:#1b2ba0;border:none;border-radius:8px;padding:.35rem .6rem;font-weight:600}
+main{display:grid;grid-template-columns:1.1fr .9fr;gap:1.25rem;max-width:1200px;margin:0 auto;padding:1rem}
+@media(max-width:900px){main{grid-template-columns:1fr}}
+.card{background:#fff;border-radius:14px;padding:1rem;box-shadow:0 3px 10px rgba(0,0,0,.08)}
+#scanHint{text-align:center;color:#1b2ba0;font-weight:600;margin:.25rem 0 .75rem}
+#videoBox{position:relative;border-radius:12px;background:#e5f0fa;overflow:hidden;width:100%;height:360px;display:flex;align-items:center;justify-content:center}
+#camera{width:100%;height:100%;object-fit:cover;border-radius:12px}
+#scanOverlay{position:absolute;inset:8%;border:2px solid rgba(255,255,255,.9);border-radius:10px;box-shadow:0 0 18px rgba(27,43,160,.45);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 10px rgba(27,43,160,.25)}50%{box-shadow:0 0 28px rgba(27,43,160,.55)}100%{box-shadow:0 0 10px rgba(27,43,160,.25)}}
+#cameraError,#successMsg{margin-top:.7rem;padding:.55rem .8rem;border-radius:8px;font-size:.95rem}
+#cameraError{color:#b00020;background:#fde7ea}
+#successMsg{color:#106b35;background:#e7f7ef}
+.actions{margin-top:.9rem;display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+@media(max-width:900px){.actions{grid-template-columns:1fr}}
+button{cursor:pointer;border:none;border-radius:10px;font-weight:700;transition:transform .15s ease,background .15s ease,opacity .15s ease}
+.btn-lg{padding:.9rem 1rem;font-size:1rem}
+button:active{transform:scale(.98)}
+#cameraBtn,#scanBtn,.primary{background:#1b2ba0;color:#fff}
+#cameraBtn:hover,#scanBtn:hover,.primary:hover{background:#14257f}
+.ghost{background:#eef1f8;color:#1b2ba0}.ghost:hover{background:#dee3f2}
+.import-zone{margin-top:.6rem;font-size:.95rem;color:#333;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+#ficheMeta{background:#eaf0ff;color:#1b2ba0;font-weight:700;padding:.7rem 1rem;border-radius:10px;margin-bottom:.8rem}
+#infosComplementaires{font-size:.95rem;color:#333;margin-bottom:.8rem}
+.form-fields{display:flex;flex-direction:column;gap:.8rem}
+.field label{display:block;font-weight:600;margin-bottom:.35rem;color:#111}
+.input-xl{width:100%;padding:.9rem 1rem;border:1px solid #cbd5e1;border-radius:10px;background:#fafafa}
+.gps-field{display:grid;grid-template-columns:1fr auto;gap:.5rem}
+.gps-btn{padding:.8rem 1rem;border-radius:10px;background:#0e9a5a;color:#fff;font-weight:700}
+.gps-btn:hover{background:#0c834c}
+.bloc-title{font:700 1rem "Montserrat",sans-serif;margin:1rem 0 .35rem;color:#1b2ba0}
+#compiledPrompt{width:100%;min-height:180px;border:1px solid #cbd5e1;border-radius:10px;padding:.75rem;font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;background:#fafafa;color:#111;resize:vertical;margin:.6rem 0}
+.ia-buttons{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem}
+.ia-buttons .ia-btn{padding:.6rem .9rem;border-radius:10px;font-weight:700}
+.ia-buttons .green{background:#1b9e77;color:#fff}.ia-buttons .green:hover{background:#168863}
+.ia-buttons .orange{background:#e67e22;color:#fff}.ia-buttons .orange:hover{background:#cf6b13}
+footer{background:#1b2ba0;color:#fff;text-align:center;padding:.6rem 1rem;font-size:.95rem;margin-top:1rem}
+footer #appVersion{opacity:.85;font-style:italic;margin-left:.35rem}
