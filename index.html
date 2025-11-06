@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Mémento opérationnel IA – RCH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=4.7.0" />
+  <script type="module">
+    import QrScanner from "https://unpkg.com/qr-scanner@1.4.2/qr-scanner.min.js";
+    QrScanner.WORKER_PATH = "https://unpkg.com/qr-scanner@1.4.2/qr-scanner-worker.min.js";
+    window.__QrScanner = QrScanner;
+  </script>
+</head>
+<body>
+  <header>
+    <img src="assets/logo-ensosp.png" alt="ENSOSP" />
+    <h1>Mémento opérationnel IA – RCH</h1>
+    <select id="langSelect" aria-label="Langue">
+      <option value="FR" selected>FR</option>
+      <option value="EN">EN</option>
+    </select>
+  </header>
+  <main>
+    <section class="card">
+      <p id="scanHint" class="hidden">Cadrez le QR code dans la zone puis cliquez sur « Scanner QR Code ».</p>
+      <div id="videoBox" class="hidden">
+        <video id="camera" autoplay muted playsinline></video>
+        <div id="scanOverlay"></div>
+      </div>
+      <p id="cameraError" class="hidden"></p>
+      <p id="successMsg" class="hidden"></p>
+      <div class="actions">
+        <button id="cameraBtn" class="btn-lg">Activer la caméra</button>
+        <button id="scanBtn" class="btn-lg">Scanner QR Code</button>
+        <button id="resetBtn" class="btn-lg ghost">Réinitialiser</button>
+      </div>
+      <div class="import-zone">
+        <span>Ou importer une image de QR :</span>
+        <input type="file" id="qrFile" accept="image/*" />
+      </div>
+      <h3 class="bloc-title">Prompt</h3>
+      <button id="btnGenerate" class="btn-lg primary">Générer le prompt</button>
+      <textarea id="compiledPrompt" placeholder="Prompt IA généré…" readonly></textarea>
+      <div id="iaButtons" class="ia-buttons"></div>
+    </section>
+    <section class="card">
+      <div id="ficheMeta">Catégorie – Titre – Version du QR code flashé</div>
+      <div id="infosComplementaires"></div>
+      <div id="formFields" class="form-fields"></div>
+    </section>
+  </main>
+  <footer>
+    © ENSOSP — Cne Eddy Fischer – Cdt Anne Tirelle
+    <span id="appVersion"></span>
+  </footer>
+  <script src="js/app.js?v=4.7.0"></script>
+</body>
+</html>
