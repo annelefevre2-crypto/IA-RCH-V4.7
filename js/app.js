@@ -74,27 +74,65 @@
     }catch{ showError("Aucun QR lisible."); }
   });
 
-  const slugify = (s)=> (s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"_").replace(/^_+|_+$/g,"");
-  const normalizeId = (x)=>{ const s=slugify(x); const map={code_onu:"code_onu",onu:"code_onu",un:"code_onu",code_danger_adr:"code_danger_adr",code_danger:"code_danger_adr",kemler:"code_danger_adr",nom_produit:"nom_produit",nom_du_produit:"nom_produit",name:"nom_produit",nom:"nom_produit",numero_cas:"numero_cas",num_cas:"numero_cas",n_cas:"numero_cas",ncas:"numero_cas"}; return map[s]||s; };
+ // --- utilitaires ---
+const slugify = (s)=> (s||"")
+  .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+  .toLowerCase().replace(/[^a-z0-9]+/g,"_").replace(/^_+|_+$/g,"");
 
-  function extractFields(obj){
-    if(Array.isArray(obj?.fields)){
-      return obj.fields.map(x=>({ id: normalizeId(x.id||x.name||x.label), label: x.label||x.titre||x.name||x.id, type: (x.type||"text").toLowerCase(), required: !!x.required, options: x.options||[] }));
-    }
-    const labelsCSV = obj["nom_champ_entrée"]||obj["nom_champ_entree"]||obj["nom_champ"]||obj["nom_champs"]||"";
-    const typesCSV  = obj["type_champ"]||obj["type_de_champs"]||"";
-    const reqCSV    = obj["Obligatoire"]||obj["obligatoire"]||"";
-    const labels = labelsCSV.split(",").map(s=>s.trim()).filter(Boolean);
-    const types  = typesCSV.split(",").map(s=>s.trim().toLowerCase()).filter(Boolean);
-    const reqs   = reqCSV.split(",").map(s=>s.trim().toUpperCase()).filter(Boolean);
-    return labels.map((label,i)=>({
-      id: normalizeId(label),
-      label,
-      type: types[i]||"text",
-      required: (reqs[i]||"F")==="O",
-      options: []
+const normalizeId = (x)=>{
+  const s = slugify(x);
+  const map = {
+    code_onu:"code_onu", onu:"code_onu", un:"code_onu",
+    code_danger_adr:"code_danger_adr", code_danger:"code_danger_adr", kemler:"code_danger_adr",
+    nom_produit:"nom_produit", nom_du_produit:"nom_produit", name:"nom_produit", nom:"nom_produit",
+    numero_cas:"numero_cas", num_cas:"numero_cas", n_cas:"numero_cas", ncas:"numero_cas"
+  };
+  return map[s] || s;
+};
+
+const firstKey = (obj, keys=[]) => {
+  for (const k of keys) if (k in (obj||{})) return obj[k];
+  return "";
+};
+
+// --- NOUVELLE extractFields ---
+function extractFields(obj) {
+  // 1) Format JSON “propre”
+  if (Array.isArray(obj?.fields)) {
+    return obj.fields.map(x => ({
+      id: normalizeId(x.id || x.name || x.label),
+      label: x.label || x.titre || x.name || x.id,
+      type: (x.type || "text").toLowerCase(),
+      required: !!x.required,
+      options: x.options || []
     }));
   }
+
+  // 2) Fallback “tableau OPS” (labels / types / obligatoire in CSV)
+  const labelsCSV = firstKey(obj, [
+    "nom_champ_entrée","nom_champ_entree","nom_champ","nom_champs",
+    "Champs / données d'entrée","Champs / donnees d'entree","champs_d_entree"
+  ]);
+  const typesCSV  = firstKey(obj, [
+    "type_champ","type_de_champs","type champs","type",
+    "type de champs","types"
+  ]);
+  const reqCSV    = firstKey(obj, [
+    "Obligatoire","obligatoire","Obligatoire (O/F)","O/F"
+  ]);
+
+  const labels = String(labelsCSV).split(",").map(s=>s.trim()).filter(Boolean);
+  const types  = String(typesCSV).split(",").map(s=>s.trim().toLowerCase()).filter(Boolean);
+  const reqs   = String(reqCSV).split(",").map(s=>s.trim().toUpperCase()).filter(Boolean);
+
+  return labels.map((label, i) => ({
+    id: normalizeId(label),
+    label,
+    type: (types[i] || "text"),
+    required: (reqs[i] || "F") === "O",
+    options: []
+  }));
+}
 
   function ensureExtraInfoField(){
     let el = document.getElementById("extraInfo");
